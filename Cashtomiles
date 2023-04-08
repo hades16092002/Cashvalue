@@ -1,0 +1,48 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class RewardValue {
+private:
+    double cashValue;
+    int milesValue;
+    const double MILES_TO_CASH_RATE = 0.0035;
+
+public:
+    RewardValue(double cashValue) {
+        this->cashValue = cashValue;
+        this->milesValue = static_cast<int>(cashValue / MILES_TO_CASH_RATE);
+    }
+
+    RewardValue(int milesValue) {
+        this->milesValue = milesValue;
+        this->cashValue = milesValue * MILES_TO_CASH_RATE;
+    }
+
+    double getCashValue() {
+        return cashValue;
+    }
+
+    int getMilesValue() {
+        return milesValue;
+    }
+};
+
+int main() {
+    cout << "Welcome to the Credit Card Rewards Converter!" << endl;
+    cout << "Please enter a cash value to convert to airline miles: ";
+    string input_value;
+    getline(cin, input_value);
+    double cashValue;
+    try {
+        cashValue = stod(input_value);
+    } catch (const std::invalid_argument &exception) {
+        cout << "Could not parse input value as a double, exiting" << endl;
+        return 0;
+    }
+    cout << "converting $" << input_value << " to miles" << endl;
+    RewardValue rewardsValue(cashValue);
+    cout << "$" << input_value << " is worth " << rewardsValue.getMilesValue() << " miles" << endl;
+    return 0;
+}
